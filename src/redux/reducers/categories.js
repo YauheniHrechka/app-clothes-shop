@@ -14,6 +14,18 @@ const setProducts = ({ categories, productsFirstCategory }) => {
     }, new Map());
 }
 
+const setProduct = (products, category, product) => {
+    let [...arrProducts] = products.get(category);
+    let indexProduct = arrProducts.findIndex(item => item.id === product.id);
+    let objProduct = {
+        ...arrProducts[indexProduct],
+        ...product
+    }
+    arrProducts.splice(indexProduct, 1, objProduct);
+
+    return products.set(category, arrProducts);
+}
+
 const categories = (state = initialState, { type, payload }) => {
     // console.log('type', type);
     // console.log('payload', payload);
@@ -37,6 +49,15 @@ const categories = (state = initialState, { type, payload }) => {
                 filters: {
                     ...state.filters,
                     category: payload.category
+                }
+            }
+
+        case 'SET_PRODUCT':
+            return {
+                ...state,
+                products: setProduct(state.products, payload.category, payload),
+                filters: {
+                    ...state.filters
                 }
             }
 

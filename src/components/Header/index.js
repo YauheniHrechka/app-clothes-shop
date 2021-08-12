@@ -1,4 +1,5 @@
 import React from 'react';
+import { Link } from 'react-router-dom';
 import { Navigation, Actions } from '../';
 import './Header.scss';
 
@@ -10,7 +11,9 @@ class Header extends React.Component {
         return (
             <header className="header" >
                 <Navigation />
-                <div className="logo"><h2>Logo</h2></div>
+                <Link to="/">
+                    <div className="logo"><h2>Logo</h2></div>
+                </Link>
                 <Actions />
             </header>
         )

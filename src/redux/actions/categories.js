@@ -1,5 +1,5 @@
 import { client } from '@tilework/opus';
-import { GET_ALL_CATEGORIES, GET_PRODUCTS_BY_CATEGORY } from '../queries/categories';
+import { GET_ALL_CATEGORIES, GET_PRODUCTS_BY_CATEGORY, GET_PRODUCT_BY_ID } from '../queries/categories';
 import { config } from '../../config/config';
 
 export const queryStart = () => async dispatch => {
@@ -24,13 +24,25 @@ export const queryStart = () => async dispatch => {
 export const queryProductsByCategory = category => async dispatch => {
     client.setEndpoint(config.uri);
 
-    const queryResultByName = await client.post(GET_PRODUCTS_BY_CATEGORY(category));
-    dispatch(setProductsAndFilterByCategory(category, queryResultByName));
+    const queryResult = await client.post(GET_PRODUCTS_BY_CATEGORY(category));
+    dispatch(setProductsAndFilterByCategory(category, queryResult));
+}
+
+export const queryProductById = productId => async dispatch => {
+    client.setEndpoint(config.uri);
+
+    const queryResult = await client.post(GET_PRODUCT_BY_ID(productId));
+    dispatch(setProduct(queryResult));
 }
 
 export const setFilterByCategory = category => ({
     type: 'SET_FILTER_BY_CATEGORY',
     payload: category
+})
+
+const setProduct = ({ product }) => ({
+    type: 'SET_PRODUCT',
+    payload: product
 })
 
 const setProductsAndFilterByCategory = (category, { category: { products } }) => ({

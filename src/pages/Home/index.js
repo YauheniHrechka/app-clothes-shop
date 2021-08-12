@@ -1,6 +1,7 @@
 import React from 'react';
-import { ProductCard } from '../../components';
+import { Link } from 'react-router-dom';
 import { connect } from 'react-redux';
+import { ProductCard } from '../../components';
 import './Home.scss';
 
 class Home extends React.Component {
@@ -14,7 +15,11 @@ class Home extends React.Component {
                 <h2 className="title">{activeCategory.toUpperCase()}</h2>
                 <div className="products">
                     {products.length > 0 &&
-                        products.map(product => <ProductCard key={product.id} {...product} />)}
+                        products.map(product =>
+                            <Link to={`/products/${product.category}/${product.id}`}
+                                key={product.id}>
+                                <ProductCard {...product} />
+                            </Link>)}
                 </div>
             </main>
         )
