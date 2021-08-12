@@ -5,14 +5,15 @@ class ProductCard extends React.Component {
 
     render() {
         // console.log(this.props);
-        const { name, gallery, prices } = this.props;
+        const { name, gallery, prices, currency } = this.props;
+        const price = prices.find(price => price.currency === currency).amount;
 
         return (
             <figure className="product-card">
                 <img src={gallery[0]} alt={name} />
                 <figcaption>
                     <p>{name}</p>
-                    <p>{prices[0].amount}</p>
+                    <p>{price}</p>
                 </figcaption>
             </figure>
         )

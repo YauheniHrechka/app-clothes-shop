@@ -1,6 +1,9 @@
 import React from 'react';
+import { Link } from 'react-router-dom';
 import { connect } from 'react-redux';
+
 import { queryProductsByCategory, setFilterByCategory } from '../../redux/actions/categories';
+
 import './Navigation.scss';
 
 class Navigation extends React.Component {
@@ -16,7 +19,7 @@ class Navigation extends React.Component {
     render() {
         const { activeCategory, categories } = this.props;
         // console.log('render Navigation ', activeCategory);
-        console.log('render Navigation ');
+        // console.log('render Navigation ');
         return (
             <nav className="navigation">
                 <ul>
@@ -24,7 +27,7 @@ class Navigation extends React.Component {
                         <li
                             onClick={() => this.onClickCategory(category)}
                             key={category}>
-                            <a className={activeCategory === category ? `active` : ``} href="#">{category.toUpperCase()}</a>
+                            <Link to="/" className={activeCategory === category ? `active` : ``}>{category.toUpperCase()}</Link>
                         </li>)}
                 </ul>
             </nav>

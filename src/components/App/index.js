@@ -5,7 +5,7 @@ import { connect } from 'react-redux';
 import { queryStart } from '../../redux/actions/categories';
 import { queryCurrencies } from '../../redux/actions/currencies';
 import { Header } from '../';
-import { Home, Product } from '../../pages';
+import { Home, Product, Cart } from '../../pages';
 
 import './App.scss';
 
@@ -22,10 +22,10 @@ class App extends React.Component {
     return (
       <div className="app-wrapper">
         <Header />
-        {/* <Home /> */}
         <Switch>
           <Route path="/" exact component={Home} />
           <Route path="/products/:category/:id" component={Product} />
+          <Route path="/cart" component={Cart} />
           <Redirect to="/" />
         </Switch>
       </div>

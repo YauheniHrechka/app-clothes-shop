@@ -11,9 +11,9 @@ class Header extends React.Component {
         return (
             <header className="header" >
                 <Navigation />
-                <Link to="/">
-                    <div className="logo"><h2>Logo</h2></div>
-                </Link>
+                <div className="logo">
+                    <Link to="/">Logo</Link>
+                </div>
                 <Actions />
             </header>
         )

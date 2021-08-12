@@ -1,11 +1,14 @@
 import React from 'react';
+import { Link } from 'react-router-dom';
 import { connect } from 'react-redux';
+
+import { changeCurrency } from '../../redux/actions/cart';
+
 import './Actions.scss';
 
 class Actions extends React.Component {
     state = {
-        visibleCurrenciesPopup: false,
-        activeCurrency: 'USD'
+        visibleCurrenciesPopup: false
     }
 
     onClickCurrenciesPopup = () => {
@@ -13,15 +16,15 @@ class Actions extends React.Component {
     }
 
     onSelectCurrency = currency => {
-        this.setState({
-            activeCurrency: currency,
-            visibleCurrenciesPopup: false
-        });
+        this.setState({ visibleCurrenciesPopup: false });
+        this.props.changeCurrency(currency);
     }
 
+    onChangeCurrency = e => console.log('e => ', e.target.getAttribute('data-currency'))
+
     render() {
-        const { currencies } = this.props;
-        const { activeCurrency, visibleCurrenciesPopup } = this.state;
+        const { activeCurrency, currencies, totalCount } = this.props;
+        const { visibleCurrenciesPopup } = this.state;
 
         return (
             <nav className="actions">
@@ -41,15 +44,26 @@ class Actions extends React.Component {
                             </nav>
                         }
                     </li>
-                    <li className="cart">cart</li>
+                    <li className="cart">
+                        <Link to="/cart">
+                            <span>cart</span>
+                            <span style={{ position: 'absolute', color: 'red' }}>{totalCount}</span>
+                        </Link>
+                    </li>
                 </ul>
             </nav>
         )
     }
 }
 
-const mapStateToProps = ({ currencies: { currencies } }) => ({
+const mapStateToProps = ({ currencies: { currencies }, cart }) => ({
+    totalCount: cart.totalCount ? cart.totalCount : '',
+    activeCurrency: cart.currency,
     currencies
 })
 
-export default connect(mapStateToProps)(Actions);
+const mapDispatchToProps = dispatch => ({
+    changeCurrency: currency => dispatch(changeCurrency(currency))
+})
+
+export default connect(mapStateToProps, mapDispatchToProps)(Actions);
