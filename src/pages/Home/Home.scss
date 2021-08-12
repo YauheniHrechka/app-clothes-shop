@@ -1,0 +1,15 @@
+main {
+    .title {
+        margin-top: 80px;
+        font-style: normal;
+        font-weight: normal;
+        font-size: 42px;
+        line-height: 160%;
+    }
+
+    .products {
+        display: flex;
+        flex-wrap: wrap;
+        justify-content: space-between;
+    }
+}

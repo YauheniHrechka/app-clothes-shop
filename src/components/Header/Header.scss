@@ -1,15 +1,11 @@
 .header {
     // background-color: aqua;
-    position: absolute;
+    position: relative;
     left: 0%;
     right: 0%;
     top: 0%;
     bottom: 0%;
     height: 80px;
-    // flex-direction: row;
-    // justify-content: space-between;
-    // align-items: center;
-    padding: 0 101px;
 
     ul {
         list-style: none;
@@ -21,24 +17,4 @@
         left: 50%;
         transform: translate(-50%, -50%);
     }
-}
-
-.title {
-    position: absolute;
-    width: 299px;
-    height: 68px;
-    left: calc(50% - 299px/2 - 469.5px);
-    top: calc(50% - 68px/2 - 562.5px);
-
-    /* Heading / Desktop / H2 */
-
-    font-family: Raleway;
-    font-style: normal;
-    font-weight: normal;
-    font-size: 42px;
-    line-height: 160%;
-    /* identical to box height, or 67px */
-
-    display: flex;
-    align-items: center;
 }

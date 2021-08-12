@@ -1,4 +1,5 @@
 import React from 'react';
+import { connect } from 'react-redux';
 import './Actions.scss';
 
 class Actions extends React.Component {
@@ -47,4 +48,8 @@ class Actions extends React.Component {
     }
 }
 
-export default Actions;
+const mapStateToProps = ({ currencies: { currencies } }) => ({
+    currencies
+})
+
+export default connect(mapStateToProps)(Actions);

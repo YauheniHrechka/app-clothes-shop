@@ -9,13 +9,12 @@
         li {        
             a {
                 display: block;
-                box-sizing: border-box;
                 padding: 0 36px;
                 line-height: 80px;
                 height: 80px;
                 text-decoration: none;
 
-                &:hover {
+                &:hover, &.active {
                     color: #5ece7b;
                 }
             }  

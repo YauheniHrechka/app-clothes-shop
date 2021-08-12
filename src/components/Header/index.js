@@ -5,13 +5,13 @@ import './Header.scss';
 class Header extends React.Component {
 
     render() {
-        const { categories, currencies } = this.props;
-
+        // const { categories, currencies } = this.props;
+        // console.log('render Header', categories);
         return (
             <header className="header" >
-                <Navigation categories={categories} />
+                <Navigation />
                 <div className="logo"><h2>Logo</h2></div>
-                <Actions currencies={currencies} />
+                <Actions />
             </header>
         )
     }
