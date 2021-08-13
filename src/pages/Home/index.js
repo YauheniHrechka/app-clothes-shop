@@ -1,5 +1,4 @@
 import React from 'react';
-import { Link } from 'react-router-dom';
 import { connect } from 'react-redux';
 import { ProductCard } from '../../components';
 import './Home.scss';
@@ -7,7 +6,7 @@ import './Home.scss';
 class Home extends React.Component {
 
     render() {
-        const { activeCategory, products, currency } = this.props;
+        const { activeCategory, products, productsCart, currency } = this.props;
         // console.log('products => ', products);
         // console.log('render HOME');
 
@@ -17,19 +16,21 @@ class Home extends React.Component {
                 <div className="products">
                     {products.length > 0 &&
                         products.map(product =>
-                            <Link to={`/products/${product.category}/${product.id}`}
-                                key={product.id}>
-                                <ProductCard currency={currency} {...product} />
-                            </Link>)}
+                            <ProductCard
+                                inCart={productsCart.has(product.id)}
+                                currency={currency}
+                                {...product}
+                                key={product.id} />)}
                 </div>
             </main>
         )
     }
 }
 
-const mapStateToProps = ({ categories: { products, filters }, cart: { currency } }) => ({
+const mapStateToProps = ({ categories: { products, filters }, cart: { currency, products: productsCart } }) => ({
     products: products.get(filters.category) || [],
     activeCategory: filters.category,
+    productsCart,
     currency
 })
 

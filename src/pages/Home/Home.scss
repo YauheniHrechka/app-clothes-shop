@@ -9,6 +9,10 @@ main {
     .products {
         display: flex;
         flex-wrap: wrap;
-        justify-content: space-between;
+        margin: 0 -40px;
+
+        a {
+            text-decoration: none;
+        }
     }
 }

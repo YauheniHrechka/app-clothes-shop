@@ -1,5 +1,7 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
+import cart from '../../img/cart.svg';
+import arrowBottom from '../../img/arrow-bottom.svg';
 import { connect } from 'react-redux';
 
 import { changeCurrency } from '../../redux/actions/cart';
@@ -27,31 +29,33 @@ class Actions extends React.Component {
         const { visibleCurrenciesPopup } = this.state;
 
         return (
-            <nav className="actions">
-                <ul>
-                    <li>
-                        <span onClick={this.onClickCurrenciesPopup}>{activeCurrency}</span>
-                        {visibleCurrenciesPopup &&
-                            <nav className="currencies">
-                                <ul>
-                                    {currencies.map(currency => (
-                                        <li
-                                            onClick={() => this.onSelectCurrency(currency)}
-                                            key={currency}>
-                                            {currency}
-                                        </li>))}
-                                </ul>
-                            </nav>
-                        }
-                    </li>
-                    <li className="cart">
-                        <Link to="/cart">
-                            <span>cart</span>
-                            <span style={{ position: 'absolute', color: 'red' }}>{totalCount}</span>
-                        </Link>
-                    </li>
-                </ul>
-            </nav>
+            <div className="actions">
+                <div className="currency">
+                    <div onClick={this.onClickCurrenciesPopup}>
+                        <span className="active-currency">{activeCurrency}</span>
+                        <img src={arrowBottom} alt="currency" />
+                    </div>
+                    {visibleCurrenciesPopup &&
+                        <nav className="currencies">
+                            <ul>
+                                {currencies.map(currency => (
+                                    <li
+                                        onClick={() => this.onSelectCurrency(currency)}
+                                        key={currency}>
+                                        {currency}
+                                    </li>))}
+                            </ul>
+                        </nav>
+                    }
+                </div>
+
+                <div className="cart">
+                    <Link to="/cart">
+                        <img src={cart} alt="cart" />
+                        {totalCount > 0 && <span>{totalCount}</span>}
+                    </Link>
+                </div>
+            </div>
         )
     }
 }

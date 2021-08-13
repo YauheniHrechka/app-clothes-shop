@@ -1,6 +1,7 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
 import { Navigation, Actions } from '../';
+import logo from '../../img/logo.svg';
 import './Header.scss';
 
 class Header extends React.Component {
@@ -12,7 +13,9 @@ class Header extends React.Component {
             <header className="header" >
                 <Navigation />
                 <div className="logo">
-                    <Link to="/">Logo</Link>
+                    <Link to="/">
+                        <img src={logo} alt="logo" />
+                    </Link>
                 </div>
                 <Actions />
             </header>
