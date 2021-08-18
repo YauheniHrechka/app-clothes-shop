@@ -15,8 +15,9 @@ class ProductCart extends React.Component {
     }
 
     onClickMinus = () => {
-        const { product: { product }, minusItem } = this.props;
-        minusItem(product);
+        const { product: { product, count }, deleteProduct, minusItem } = this.props;
+        // console.log('count => ', count);
+        (count === 1 ? deleteProduct : minusItem)(product);
     }
 
     onClickPrev = () => {

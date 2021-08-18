@@ -4,6 +4,11 @@ export const addProduct = product => ({
     payload: product
 })
 
+export const deleteProduct = product => ({
+    type: 'DELETE_PRODUCT',
+    payload: product
+})
+
 export const plusItem = product => ({
     type: 'PLUS_ITEM',
     payload: product

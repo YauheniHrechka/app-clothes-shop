@@ -24,6 +24,17 @@ const cart = (state = initialState, { type, payload }) => {
                 totalAmount: +(state.totalAmount + amount).toFixed(2)
             }
 
+        case 'DELETE_PRODUCT':
+            amount = payload.prices.find(price => price.currency === state.currency).amount;
+            state.products.delete(payload.id);
+
+            return {
+                ...state,
+                products: state.products,
+                totalCount: --state.totalCount,
+                totalAmount: +(state.totalAmount - amount).toFixed(2)
+            }
+
         case 'PLUS_ITEM':
             product = state.products.get(payload.id);
             amount = payload.prices.find(price => price.currency === state.currency).amount;
