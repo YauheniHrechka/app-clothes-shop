@@ -1,6 +1,6 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
-import emptyCart from '../../img/empty-cart.svg';
+import emptyCart from '../../assets/img/empty-cart.svg';
 import './ProductCard.scss';
 
 class ProductCard extends React.Component {

@@ -1,6 +1,6 @@
 import React from 'react';
-import arrowPrev from '../../img/arrow-left-white.svg';
-import arrowNext from '../../img/arrow-right-white.svg';
+import arrowPrev from '../../assets/img/arrow-left-white.svg';
+import arrowNext from '../../assets/img/arrow-right-white.svg';
 
 import './ProductCart.scss';
 
@@ -43,13 +43,13 @@ class ProductCart extends React.Component {
     }
 
     render() {
-        const { product: { product, amount, count } } = this.props;
+        const { product: { product, amount, count }, showSeparator = false, style = {} } = this.props;
         const { activeSlide } = this.state;
 
         return (
-            <div className="product-cart">
-                <hr />
-                <div className="info">
+            <div className="product-cart" style={style}>
+                {showSeparator && <hr />}
+                <div className="info-wrapper">
                     <div className="product-info">
                         <p className="title">{product.brand}</p>
                         <p className="name">{product.name}</p>

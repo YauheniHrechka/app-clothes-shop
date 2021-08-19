@@ -1,7 +1,7 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
-import cart from '../../img/cart.svg';
-import arrowBottom from '../../img/arrow-bottom.svg';
+import cart from '../../assets/img/cart.svg';
+import arrowBottom from '../../assets/img/arrow-bottom.svg';
 import { connect } from 'react-redux';
 
 import { changeCurrency } from '../../redux/actions/cart';
@@ -24,8 +24,12 @@ class Actions extends React.Component {
 
     onChangeCurrency = e => console.log('e => ', e.target.getAttribute('data-currency'))
 
+    // onMouseEnter = e => {
+    //     console.log('onMouseEntry');
+    // }
+
     render() {
-        const { activeCurrency, currencies, totalCount } = this.props;
+        const { activeCurrency, currencies, onMouseEnterCart, totalCount } = this.props;
         const { visibleCurrenciesPopup } = this.state;
 
         return (
@@ -49,7 +53,7 @@ class Actions extends React.Component {
                     }
                 </div>
 
-                <div className="cart">
+                <div className="cart" onMouseEnter={onMouseEnterCart}>
                     <Link to="/cart">
                         <img src={cart} alt="cart" />
                         {totalCount > 0 && <span>{totalCount}</span>}

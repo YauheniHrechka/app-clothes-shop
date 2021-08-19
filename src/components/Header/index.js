@@ -1,13 +1,13 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
 import { Navigation, Actions } from '../';
-import logo from '../../img/logo.svg';
+import logo from '../../assets/img/logo.svg';
 import './Header.scss';
 
 class Header extends React.Component {
 
     render() {
-        // const { categories, currencies } = this.props;
+        // const { onMouseEnterCart } = this.props;
         // console.log('render Header', categories);
         return (
             <header className="header" >
@@ -17,7 +17,7 @@ class Header extends React.Component {
                         <img src={logo} alt="logo" />
                     </Link>
                 </div>
-                <Actions />
+                <Actions {...this.props} />
             </header>
         )
     }

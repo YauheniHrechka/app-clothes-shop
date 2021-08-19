@@ -11,7 +11,7 @@ class Home extends React.Component {
         // console.log('render HOME');
 
         return (
-            <main>
+            <>
                 <h2 className="title">{activeCategory.toUpperCase()}</h2>
                 <div className="products">
                     {products.length > 0 &&
@@ -22,7 +22,7 @@ class Home extends React.Component {
                                 {...product}
                                 key={product.id} />)}
                 </div>
-            </main>
+            </>
         )
     }
 }

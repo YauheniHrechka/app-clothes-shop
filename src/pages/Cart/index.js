@@ -28,7 +28,7 @@ class Cart extends React.Component {
 }
 
 const mapStateToProps = ({ cart: { products } }) => ({
-    products: [...products.values()] || []
+    products: [...products.values()]
 })
 
 const mapDispatchToProps = dispatch => ({
