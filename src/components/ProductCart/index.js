@@ -1,4 +1,5 @@
 import React from 'react';
+import { Button } from '../';
 import arrowPrev from '../../assets/img/arrow-left-white.svg';
 import arrowNext from '../../assets/img/arrow-right-white.svg';
 
@@ -16,7 +17,6 @@ class ProductCart extends React.Component {
 
     onClickMinus = () => {
         const { product: { product, count }, deleteProduct, minusItem } = this.props;
-        // console.log('count => ', count);
         (count === 1 ? deleteProduct : minusItem)(product);
     }
 
@@ -59,9 +59,9 @@ class ProductCart extends React.Component {
                         </div>
                     </div>
                     <div className="count">
-                        <button className="btn btn-plus" onClick={this.onClickPlus}>+</button>
+                        <Button {...btnPlus} onClick={this.onClickPlus} />
                         <span>{count}</span>
-                        <button className="btn btn-minus" onClick={this.onClickMinus}>-</button>
+                        <Button {...btnMinus} onClick={this.onClickMinus} />
                     </div>
                     <div className="image-show">
                         <img src={product.gallery[activeSlide]} alt={product.name} />
@@ -76,6 +76,31 @@ class ProductCart extends React.Component {
             </div>
         )
     }
+}
+
+const btnProps = {
+    style: {
+        width: '45px',
+        height: '45px',
+        backgroundColor: '#ffffff',
+        fontSize: '30px',
+        border: '1px solid #1d1f22'
+    },
+    title: ''
+}
+
+const btnPlus = {
+    style: {
+        ...btnProps.style
+    },
+    title: '+'
+}
+
+const btnMinus = {
+    style: {
+        ...btnProps.style
+    },
+    title: '-'
 }
 
 export default ProductCart;

@@ -1,4 +1,5 @@
 import React from 'react';
+import { Button } from '../';
 import './ProductCartSmall.scss';
 
 class ProductCartSmall extends React.Component {
@@ -31,9 +32,9 @@ class ProductCartSmall extends React.Component {
                         </div>
                     </div>
                     <div className="count-small">
-                        <button className="btn btn-plus" onClick={this.onClickPlus}>+</button>
+                        <Button {...btnPlus} onClick={this.onClickPlus} />
                         <span>{count}</span>
-                        <button className="btn btn-minus" onClick={this.onClickMinus}>-</button>
+                        <Button {...btnMinus} onClick={this.onClickMinus} />
                     </div>
                     <div className="image-show-small">
                         <img src={product.gallery[0]} alt={product.name} />
@@ -42,6 +43,31 @@ class ProductCartSmall extends React.Component {
             </div>
         )
     }
+}
+
+const btnProps = {
+    style: {
+        width: '24px',
+        height: '24px',
+        backgroundColor: '#ffffff',
+        fontSize: '20px',
+        border: '1px solid #1d1f22'
+    },
+    title: ''
+}
+
+const btnPlus = {
+    style: {
+        ...btnProps.style
+    },
+    title: '+'
+}
+
+const btnMinus = {
+    style: {
+        ...btnProps.style
+    },
+    title: '-'
 }
 
 export default ProductCartSmall;

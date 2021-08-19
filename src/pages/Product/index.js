@@ -1,5 +1,6 @@
 import React from 'react';
 import { connect } from 'react-redux';
+import { Button } from '../../components';
 
 import { queryProductById } from '../../redux/actions/categories';
 import { addProduct } from '../../redux/actions/cart';
@@ -53,7 +54,7 @@ class Product extends React.Component {
                         <div className="price">
                             <span>PRICE:</span>
                             <p>{price}</p>
-                            <button onClick={this.onClickAddToCart}>ADD TO CART</button>
+                            <Button {...btnProps} onClick={this.onClickAddToCart} />
                         </div>
                         <div className="description" dangerouslySetInnerHTML={{ __html: description }}></div>
                     </figcaption>
@@ -61,6 +62,17 @@ class Product extends React.Component {
             </div >
         )
     }
+}
+
+const btnProps = {
+    style: {
+        width: '100%',
+        height: '52px',
+        background: '#5ece7b',
+        color: '#ffffff',
+        fontSize: '16px',
+    },
+    title: 'ADD TO CART'
 }
 
 const mapStateToProps = (state, props) => {

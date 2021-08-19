@@ -1,7 +1,7 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
 import { connect } from 'react-redux';
-import { ProductCartSmall } from '../';
+import { Button, ProductCartSmall } from '../';
 
 import { deleteProduct, minusItem, plusItem } from '../../redux/actions/cart';
 
@@ -31,17 +31,40 @@ class PreviewCart extends React.Component {
                 </div>
                 <div className="buttons">
                     <Link to="/cart">
-                        <button className="btn">
-                            VIEW BAG
-                        </button>
+                        <Button {...btnViewBag} />
                     </Link>
-                    <button className="btn" style={{ background: '#5ece7b', color: '#ffffff', border: 'none' }}>
-                        CHECK OUT
-                    </button>
+                    <Button {...btnCheckOut} />
                 </div>
             </div>
         )
     }
+}
+
+const btnProps = {
+    style: {
+        width: '140px',
+        height: '43px',
+        padding: '16px',
+        backgroundColor: '#ffffff'
+    },
+    title: ''
+}
+
+const btnViewBag = {
+    style: {
+        ...btnProps.style,
+        border: '1px solid #1d1f22',
+    },
+    title: 'VIEW BAG'
+}
+
+const btnCheckOut = {
+    style: {
+        ...btnProps.style,
+        background: '#5ece7b',
+        color: '#ffffff'
+    },
+    title: 'CHECK OUT'
 }
 
 const mapStateToProps = ({ cart: { products, totalCount, totalAmount } }) => ({
