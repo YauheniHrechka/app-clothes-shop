@@ -1,7 +1,7 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
 import { connect } from 'react-redux';
-import { ProductCart } from '../';
+import { ProductCartSmall } from '../';
 
 import { deleteProduct, minusItem, plusItem } from '../../redux/actions/cart';
 
@@ -19,9 +19,7 @@ class PreviewCart extends React.Component {
                     <span>My Bag,</span><span>{` ${totalCount} items`}</span>
                 </div>
                 {products.map(product =>
-                    <ProductCart
-                        showSeparator={false}
-                        // style={{ height: '137px' }}
+                    <ProductCartSmall
                         deleteProduct={deleteProduct}
                         plusItem={plusItem}
                         minusItem={minusItem}
@@ -37,7 +35,7 @@ class PreviewCart extends React.Component {
                             VIEW BAG
                         </button>
                     </Link>
-                    <button className="btn">
+                    <button className="btn" style={{ background: '#5ece7b', color: '#ffffff', border: 'none' }}>
                         CHECK OUT
                     </button>
                 </div>

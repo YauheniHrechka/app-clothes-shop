@@ -24,7 +24,9 @@ class App extends React.Component {
   }
 
   handleOutsideClick = e => {
-    if (!e.composedPath().includes(this.refPreviewCart.current)) {
+    if (!e.composedPath().includes(this.refPreviewCart.current) ||
+      e.target.innerHTML === 'VIEW BAG' ||
+      e.target.innerHTML === 'CHECK OUT') {
       this.setState({ visiblePreviewCart: false })
     }
   }

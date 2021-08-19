@@ -29,6 +29,10 @@
         display: flex;
         justify-content: space-between;
 
+        a {
+            text-decoration: none;
+        }
+
         button {
             width: 140px;
             height: 43px;
@@ -36,6 +40,7 @@
             border: 1px solid #1d1f22;
             background-color: #ffffff;
             box-sizing: border-box;
+            cursor: pointer;
             display: flex;
             justify-content: center;
             align-items: center;

@@ -43,12 +43,12 @@ class ProductCart extends React.Component {
     }
 
     render() {
-        const { product: { product, amount, count }, showSeparator = false, style = {} } = this.props;
+        const { product: { product, amount, count } } = this.props;
         const { activeSlide } = this.state;
 
         return (
-            <div className="product-cart" style={style}>
-                {showSeparator && <hr />}
+            <div className="product-cart">
+                <hr />
                 <div className="info-wrapper">
                     <div className="product-info">
                         <p className="title">{product.brand}</p>
