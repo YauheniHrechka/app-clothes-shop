@@ -12,7 +12,6 @@ class PreviewCart extends React.Component {
 
     render() {
         const { products, deleteProduct, minusItem, plusItem, totalCount, totalAmount, refPreviewCart } = this.props;
-        // console.log('products => ', products);
 
         return (
             <div ref={refPreviewCart} className="preview-cart">
@@ -25,7 +24,7 @@ class PreviewCart extends React.Component {
                         plusItem={plusItem}
                         minusItem={minusItem}
                         product={product}
-                        key={product.product.id} />
+                        key={product[0]} />
                 )}
                 <div className="total">
                     <span>Total</span><span>{totalAmount}</span>
@@ -69,7 +68,7 @@ const btnCheckOut = {
 }
 
 const mapStateToProps = ({ cart: { products, totalCount, totalAmount } }) => ({
-    products: [...products.values()],
+    products: [...products],
     totalCount,
     totalAmount
 })

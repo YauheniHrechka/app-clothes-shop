@@ -13,17 +13,17 @@ class ProductCart extends React.Component {
     }
 
     onClickPlus = () => {
-        const { product: { product }, plusItem } = this.props;
-        plusItem(product);
+        const { product: [productId, { product }], plusItem } = this.props;
+        plusItem({ productId, product });
     }
 
     onClickMinus = () => {
-        const { product: { product, count }, deleteProduct, minusItem } = this.props;
-        (count === 1 ? deleteProduct : minusItem)(product);
+        const { product: [productId, { product, count }], deleteProduct, minusItem } = this.props;
+        (count === 1 ? deleteProduct : minusItem)({ productId, product });
     }
 
     onClickPrev = () => {
-        const { product: { product } } = this.props;
+        const { product: [, { product }] } = this.props;
         let { activeSlide } = this.state;
 
         this.setState({
@@ -34,7 +34,7 @@ class ProductCart extends React.Component {
     }
 
     onClickNext = () => {
-        const { product: { product } } = this.props;
+        const { product: [, { product }] } = this.props;
         let { activeSlide } = this.state;
 
         this.setState({
@@ -45,7 +45,7 @@ class ProductCart extends React.Component {
     }
 
     render() {
-        const { product: { product, amount, count } } = this.props;
+        const { product: [, { product, attributes, amount, count }] } = this.props;
         const { activeSlide } = this.state;
 
         return (
@@ -53,8 +53,8 @@ class ProductCart extends React.Component {
                 <hr />
                 <div className="info-wrapper">
                     <div className="product-info">
-                        <p className="title">{product.brand}</p>
-                        <p className="name">{product.name}</p>
+                        <p className="product-title">{product.brand}</p>
+                        <p className="product-name">{product.name}</p>
                         <p className="price">{amount}</p>
                         <div className="attributes">
                             {product.attributes.length > 0 &&
@@ -65,9 +65,11 @@ class ProductCart extends React.Component {
                                                 style={{
                                                     ...btnAttribute.style,
                                                     background: attribute.type === 'swatch' ? item.value : btnAttribute.style.background,
-                                                    color: attribute.type === 'swatch' && item.value === '#000000' ? '#ffffff' : btnAttribute.style.color
+                                                    color: attributes.get(attribute.id) === item.id ? '#a6a6a6' :
+                                                        attribute.type === 'swatch' && item.value === '#000000' ? '#ffffff' : btnAttribute.style.color,
+                                                    border: attributes.get(attribute.id) === item.id ? '1px solid #a6a6a6' : btnAttribute.style.border
                                                 }}
-                                                title={attribute.type === 'swatch' ? '' : item.displayValue}
+                                                title={attribute.type === 'swatch' ? '' : item.value}
                                                 key={item.id} />
                                         )}
                                     </div>)}
@@ -133,14 +135,14 @@ const btnAttribute = {
 }
 
 ProductCart.propTypes = {
-    product: PropTypes.object,
+    product: PropTypes.array,
     deleteProduct: PropTypes.func,
     minusItem: PropTypes.func,
     plusItem: PropTypes.func
 }
 
 ProductCart.defaultProps = {
-    product: {},
+    product: [],
     deleteProduct: () => { },
     minusItem: () => { },
     plusItem: () => { }

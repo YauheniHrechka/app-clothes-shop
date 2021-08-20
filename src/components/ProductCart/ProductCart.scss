@@ -11,15 +11,16 @@
                 margin-bottom: 16px;
             }
 
-            .title { font-weight: 600; }
+            .product-title { font-weight: 600; }
+            .product-name { font-weight: 400; }
 
             .price { 
                 font-size: 24px;
                 font-weight: 700;
+                margin-bottom: 12px;
              }
 
              .attributes {
-                 margin-bottom: 10px;
                  text-transform: uppercase;
 
                 .attribute-items {

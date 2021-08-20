@@ -11,12 +11,13 @@ const cart = (state = initialState, { type, payload }) => {
     switch (type) {
 
         case 'ADD_PRODUCT':
-            amount = payload.prices.find(price => price.currency === state.currency).amount;
+            amount = payload.product.prices.find(price => price.currency === state.currency).amount;
 
             return {
                 ...state,
-                products: state.products.set(payload.id, {
-                    product: payload,
+                products: state.products.set(`${payload.product.id}-${[...payload.attributes].flat().join('-')}`, {
+                    product: payload.product,
+                    attributes: payload.attributes,
                     count: 1,
                     amount
                 }),
@@ -25,8 +26,8 @@ const cart = (state = initialState, { type, payload }) => {
             }
 
         case 'DELETE_PRODUCT':
-            amount = payload.prices.find(price => price.currency === state.currency).amount;
-            state.products.delete(payload.id);
+            amount = payload.product.prices.find(price => price.currency === state.currency).amount;
+            state.products.delete(payload.productId);
 
             return {
                 ...state,
@@ -36,12 +37,12 @@ const cart = (state = initialState, { type, payload }) => {
             }
 
         case 'PLUS_ITEM':
-            product = state.products.get(payload.id);
-            amount = payload.prices.find(price => price.currency === state.currency).amount;
+            product = state.products.get(payload.productId);
+            amount = payload.product.prices.find(price => price.currency === state.currency).amount;
 
             return {
                 ...state,
-                products: state.products.set(payload.id, {
+                products: state.products.set(payload.productId, {
                     ...product,
                     count: ++product.count,
                     amount: +(product.amount + amount).toFixed(2)
@@ -51,16 +52,12 @@ const cart = (state = initialState, { type, payload }) => {
             }
 
         case 'MINUS_ITEM':
-            product = state.products.get(payload.id);
-            if (product.count === 1) {
-                return state
-            }
-
-            amount = payload.prices.find(price => price.currency === state.currency).amount;
+            product = state.products.get(payload.productId);
+            amount = payload.product.prices.find(price => price.currency === state.currency).amount;
 
             return {
                 ...state,
-                products: state.products.set(payload.id, {
+                products: state.products.set(payload.productId, {
                     ...product,
                     count: --product.count,
                     amount: +(product.amount - amount).toFixed(2)

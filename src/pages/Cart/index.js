@@ -22,7 +22,7 @@ class Cart extends React.Component {
                             plusItem={plusItem}
                             minusItem={minusItem}
                             product={product}
-                            key={product.product.id} />
+                            key={product[0]} />
                     )}
             </div>
         )
@@ -30,7 +30,7 @@ class Cart extends React.Component {
 }
 
 const mapStateToProps = ({ cart: { products } }) => ({
-    products: [...products.values()]
+    products: [...products]
 })
 
 const mapDispatchToProps = dispatch => ({

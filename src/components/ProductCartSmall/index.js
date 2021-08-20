@@ -8,18 +8,17 @@ import './ProductCartSmall.scss';
 class ProductCartSmall extends React.Component {
 
     onClickPlus = () => {
-        const { product: { product }, plusItem } = this.props;
-        plusItem(product);
+        const { product: [productId, { product }], plusItem } = this.props;
+        plusItem({ productId, product });
     }
 
     onClickMinus = () => {
-        const { product: { product, count }, deleteProduct, minusItem } = this.props;
-        // console.log('count => ', count);
-        (count === 1 ? deleteProduct : minusItem)(product);
+        const { product: [productId, { product, count }], deleteProduct, minusItem } = this.props;
+        (count === 1 ? deleteProduct : minusItem)({ productId, product });
     }
 
     render() {
-        const { product: { product, amount, count } } = this.props;
+        const { product: [, { product, attributes, amount, count }] } = this.props;
 
         return (
             <div className="product-cart-small">
@@ -39,9 +38,11 @@ class ProductCartSmall extends React.Component {
                                                 style={{
                                                     ...btnAttribute.style,
                                                     background: attribute.type === 'swatch' ? item.value : btnAttribute.style.background,
-                                                    color: attribute.type === 'swatch' && item.value === '#000000' ? '#ffffff' : btnAttribute.style.color
+                                                    color: attributes.get(attribute.id) === item.id ? '#a6a6a6' :
+                                                        attribute.type === 'swatch' && item.value === '#000000' ? '#ffffff' : btnAttribute.style.color,
+                                                    border: attributes.get(attribute.id) === item.id ? '1px solid #a6a6a6' : btnAttribute.style.border
                                                 }}
-                                                title={attribute.type === 'swatch' ? '' : item.displayValue}
+                                                title={attribute.type === 'swatch' ? '' : item.value}
                                                 key={item.id} />
                                         )}
                                     </div>)}
@@ -101,14 +102,14 @@ const btnAttribute = {
 }
 
 ProductCartSmall.propTypes = {
-    product: PropTypes.object,
+    product: PropTypes.array,
     deleteProduct: PropTypes.func,
     minusItem: PropTypes.func,
     plusItem: PropTypes.func
 }
 
 ProductCartSmall.defaultProps = {
-    product: {},
+    product: [],
     deleteProduct: () => { },
     minusItem: () => { },
     plusItem: () => { }

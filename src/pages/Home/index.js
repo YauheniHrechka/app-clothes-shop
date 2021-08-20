@@ -9,9 +9,7 @@ import './Home.scss';
 class Home extends React.Component {
 
     render() {
-        const { activeCategory, products, productsCart, currency } = this.props;
-        // console.log('products => ', products);
-        // console.log('render HOME');
+        const { activeCategory, products, productsCartKeys, currency } = this.props;
 
         return (
             <>
@@ -20,7 +18,7 @@ class Home extends React.Component {
                     {products.length > 0 &&
                         products.map(product =>
                             <ProductCard
-                                inCart={productsCart.has(product.id)}
+                                inCart={productsCartKeys.includes(product.id)}
                                 currency={currency}
                                 {...product}
                                 key={product.id} />)}
@@ -34,21 +32,21 @@ const mapStateToProps = ({ categories: { products, filters }, cart: { currency, 
     activeCategory: filters.category,
     currency,
     products: products.get(filters.category) || [],
-    productsCart
+    productsCartKeys: [...productsCart.keys()].join('')
 })
 
 Home.propTypes = {
     activeCategory: PropTypes.string,
     currency: PropTypes.string,
     products: PropTypes.array,
-    productsCart: PropTypes.any
+    productsCartKeys: PropTypes.string
 }
 
 Home.defaultProps = {
     activeCategory: '',
     currency: '',
     products: [],
-    productsCart: new Map()
+    productsCartKeys: ''
 }
 
 export default connect(mapStateToProps)(Home);

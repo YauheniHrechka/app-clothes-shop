@@ -4,13 +4,14 @@ import { connect } from 'react-redux';
 
 import { Button } from '../../components';
 import { queryProductById } from '../../redux/actions/categories';
-import { addProduct } from '../../redux/actions/cart';
+import { addProduct, plusItem } from '../../redux/actions/cart';
 
 import './Product.scss';
 
 class Product extends React.Component {
     state = {
-        activeImage: this.props.product.gallery[0]
+        activeImage: this.props.product.gallery[0],
+        selectedAttributes: new Map()
     }
 
     componentDidMount() {
@@ -21,15 +22,31 @@ class Product extends React.Component {
 
     onClickImage = image => this.setState({ activeImage: image })
 
-    onClickAddToCart = () => this.props.addProduct(this.props.product);
+    onClickAttribute = ({ attributeId, itemId }) => {
+        this.setState({
+            selectedAttributes: this.state.selectedAttributes.set(attributeId, itemId)
+        });
+    }
+
+    onClickAddToCart = () => {
+        const { product, productsCart, addProduct, plusItem } = this.props;
+        const { selectedAttributes } = this.state;
+        if (selectedAttributes.size !== product.attributes.length) {
+            alert('Select attributes'); return
+        }
+
+        const productId = `${product.id}-${[...selectedAttributes].flat().join('-')}`;
+        productsCart.has(productId) ?
+            plusItem({ productId, product }) :
+            addProduct({ product, attributes: selectedAttributes });
+
+        this.setState({ selectedAttributes: new Map() })
+    }
 
     render() {
-        // console.log('product => ', this.props.product);
-        // console.log('render page PRODUCT');
         const { product: { attributes = [], brand, name, gallery, prices, description }, currency } = this.props;
-        const { activeImage } = this.state;
+        const { activeImage, selectedAttributes } = this.state;
         const price = prices.find(price => price.currency === currency).amount;
-        console.log('attributes => ', attributes);
 
         return (
             <div className="product-wrapper">
@@ -61,9 +78,15 @@ class Product extends React.Component {
                                                     style={{
                                                         ...btnAttribute.style,
                                                         background: attribute.type === 'swatch' ? item.value : btnAttribute.style.background,
-                                                        color: attribute.type === 'swatch' && item.value === '#000000' ? '#ffffff' : btnAttribute.style.color
+                                                        color: selectedAttributes.get(attribute.id) === item.id ? '#a6a6a6' :
+                                                            attribute.type === 'swatch' && item.value === '#000000' ? '#ffffff' : btnAttribute.style.color,
+                                                        border: selectedAttributes.get(attribute.id) === item.id ? '1px solid #a6a6a6' : btnAttribute.style.border
                                                     }}
-                                                    title={attribute.type === 'swatch' ? '' : item.displayValue}
+                                                    title={attribute.type === 'swatch' ? '' : item.value}
+                                                    onClick={() => this.onClickAttribute({
+                                                        attributeId: attribute.id,
+                                                        itemId: item.id
+                                                    })}
                                                     key={item.id} />
                                             )}
                                         </div>
@@ -108,28 +131,31 @@ const btnAttribute = {
 }
 
 const mapStateToProps = (state, props) => {
-    // console.log('state => ', state);
     const { categories: { products }, cart } = state;
     const { id, category } = props.match.params;
     return {
         product: products.get(category).find(product => product.id === id) || {},
-        currency: cart.currency
+        currency: cart.currency,
+        productsCart: cart.products
     }
 }
 
 const mapDispatchToProps = dispatch => ({
     queryProductById: productId => dispatch(queryProductById(productId)),
-    addProduct: product => dispatch(addProduct(product))
+    addProduct: product => dispatch(addProduct(product)),
+    plusItem: product => dispatch(plusItem(product))
 })
 
 Product.propTypes = {
     propduct: PropTypes.object,
-    currency: PropTypes.string
+    currency: PropTypes.string,
+    productsCart: PropTypes.any
 }
 
 Product.defaultProps = {
     propduct: {},
-    currency: ''
+    currency: '',
+    productsCart: new Map()
 }
 
 export default connect(mapStateToProps, mapDispatchToProps)(Product);
