@@ -1,7 +1,8 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
-import { ProductCart } from '../../components';
 
+import { ProductCart } from '../../components';
 import { deleteProduct, minusItem, plusItem } from '../../redux/actions/cart';
 
 import './Cart.scss';
@@ -14,14 +15,15 @@ class Cart extends React.Component {
         return (
             <div className="cart">
                 <h2>CART</h2>
-                {products.map(product =>
-                    <ProductCart
-                        deleteProduct={deleteProduct}
-                        plusItem={plusItem}
-                        minusItem={minusItem}
-                        product={product}
-                        key={product.product.id} />
-                )}
+                {products.length > 0 &&
+                    products.map(product =>
+                        <ProductCart
+                            deleteProduct={deleteProduct}
+                            plusItem={plusItem}
+                            minusItem={minusItem}
+                            product={product}
+                            key={product.product.id} />
+                    )}
             </div>
         )
     }
@@ -36,5 +38,19 @@ const mapDispatchToProps = dispatch => ({
     minusItem: product => dispatch(minusItem(product)),
     deleteProduct: product => dispatch(deleteProduct(product))
 })
+
+Cart.propTypes = {
+    products: PropTypes.array,
+    deleteProduct: PropTypes.func,
+    minusItem: PropTypes.func,
+    plusItem: PropTypes.func
+}
+
+Cart.defaultProps = {
+    products: [],
+    deleteProduct: () => { },
+    minusItem: () => { },
+    plusItem: () => { }
+}
 
 export default connect(mapStateToProps, mapDispatchToProps)(Cart);

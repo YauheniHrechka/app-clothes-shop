@@ -1,7 +1,9 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
+
 import { Navigation, Actions } from '../';
 import logo from '../../assets/img/logo.svg';
+
 import './Header.scss';
 
 class Header extends React.Component {

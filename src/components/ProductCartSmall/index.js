@@ -1,5 +1,8 @@
 import React from 'react';
+import PropTypes from 'prop-types';
+
 import { Button } from '../';
+
 import './ProductCartSmall.scss';
 
 class ProductCartSmall extends React.Component {
@@ -68,6 +71,20 @@ const btnMinus = {
         ...btnProps.style
     },
     title: '-'
+}
+
+ProductCartSmall.propTypes = {
+    product: PropTypes.object,
+    deleteProduct: PropTypes.func,
+    minusItem: PropTypes.func,
+    plusItem: PropTypes.func
+}
+
+ProductCartSmall.defaultProps = {
+    product: {},
+    deleteProduct: () => { },
+    minusItem: () => { },
+    plusItem: () => { }
 }
 
 export default ProductCartSmall;

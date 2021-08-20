@@ -1,8 +1,10 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 import { Link } from 'react-router-dom';
+import { connect } from 'react-redux';
+
 import cart from '../../assets/img/cart.svg';
 import arrowBottom from '../../assets/img/arrow-bottom.svg';
-import { connect } from 'react-redux';
 
 import { changeCurrency } from '../../redux/actions/cart';
 
@@ -23,10 +25,6 @@ class Actions extends React.Component {
     }
 
     onChangeCurrency = e => console.log('e => ', e.target.getAttribute('data-currency'))
-
-    // onMouseEnter = e => {
-    //     console.log('onMouseEntry');
-    // }
 
     render() {
         const { activeCurrency, currencies, onMouseEnterCart, totalCount } = this.props;
@@ -65,13 +63,27 @@ class Actions extends React.Component {
 }
 
 const mapStateToProps = ({ currencies: { currencies }, cart }) => ({
-    totalCount: cart.totalCount ? cart.totalCount : '',
     activeCurrency: cart.currency,
-    currencies
+    currencies,
+    totalCount: cart.totalCount
 })
 
 const mapDispatchToProps = dispatch => ({
     changeCurrency: currency => dispatch(changeCurrency(currency))
 })
+
+Actions.propTypes = {
+    activeCurrency: PropTypes.string,
+    currencies: PropTypes.array,
+    onMouseEnterCart: PropTypes.func,
+    totalCount: PropTypes.number
+}
+
+Actions.defaultProps = {
+    activeCurrency: '',
+    currencies: [],
+    onMouseEnterCart: () => { },
+    totalCount: 0
+}
 
 export default connect(mapStateToProps, mapDispatchToProps)(Actions);

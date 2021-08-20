@@ -2,10 +2,10 @@ import React from 'react';
 import { Route, Redirect, Switch } from 'react-router-dom';
 import { connect } from 'react-redux';
 
-import { queryStart } from '../../redux/actions/categories';
-import { queryCurrencies } from '../../redux/actions/currencies';
 import { Header, PreviewCart } from '../';
 import { Home, Product, Cart } from '../../pages';
+import { queryStart } from '../../redux/actions/categories';
+import { queryCurrencies } from '../../redux/actions/currencies';
 
 import './App.scss';
 
@@ -42,7 +42,8 @@ class App extends React.Component {
     return (
       <div className="app-wrapper">
         <Header onMouseEnterCart={this.onMouseEnterCart} />
-        <main style={{ background: visiblePreviewCart ? 'rgba(57, 55, 72, 0.22)' : '#ffffff' }}>
+        {visiblePreviewCart && <div style={{ background: 'rgba(57, 55, 72)', width: '100%', height: '100%', opacity: '0.22', position: 'absolute', zIndex: 98 }}></div>}
+        <main>
           <Switch>
             <Route path="/" exact component={Home} />
             <Route path="/products/:category/:id" component={Product} />

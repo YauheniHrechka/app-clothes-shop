@@ -1,6 +1,9 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 import { Link } from 'react-router-dom';
+
 import emptyCart from '../../assets/img/empty-cart.svg';
+
 import './ProductCard.scss';
 
 class ProductCard extends React.Component {
@@ -26,6 +29,28 @@ class ProductCard extends React.Component {
             </figure>
         )
     }
+}
+
+ProductCard.propTypes = {
+    id: PropTypes.string,
+    category: PropTypes.string,
+    name: PropTypes.string,
+    gallery: PropTypes.array,
+    prices: PropTypes.array,
+    inCart: PropTypes.bool,
+    inStock: PropTypes.bool,
+    currency: PropTypes.string
+}
+
+ProductCard.defaultProps = {
+    id: '',
+    category: '',
+    name: '',
+    gallery: [],
+    prices: [],
+    inCart: false,
+    inStock: false,
+    currency: ''
 }
 
 export default ProductCard;

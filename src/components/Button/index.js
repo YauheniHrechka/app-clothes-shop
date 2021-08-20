@@ -1,4 +1,5 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 
 const styleDefault = {
     boxSizing: 'border-box',
@@ -10,7 +11,7 @@ const styleDefault = {
     alignItems: 'center',
 }
 
-const Button = ({ onClick = () => { }, style = {}, title = '' }) => {
+const Button = ({ onClick, style, title }) => {
 
     const btnStyle = {
         ...styleDefault,
@@ -20,6 +21,18 @@ const Button = ({ onClick = () => { }, style = {}, title = '' }) => {
     return (
         <button onClick={onClick} style={btnStyle}>{title}</button>
     )
+}
+
+Button.propTypes = {
+    onClick: PropTypes.func,
+    style: PropTypes.object,
+    title: PropTypes.string
+}
+
+Button.defaultProps = {
+    onClick: () => { },
+    style: {},
+    title: 'DEFAULT'
 }
 
 export default Button;

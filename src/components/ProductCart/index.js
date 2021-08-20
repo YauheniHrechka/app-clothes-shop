@@ -1,4 +1,6 @@
 import React from 'react';
+import PropTypes from 'prop-types';
+
 import { Button } from '../';
 import arrowPrev from '../../assets/img/arrow-left-white.svg';
 import arrowNext from '../../assets/img/arrow-right-white.svg';
@@ -101,6 +103,20 @@ const btnMinus = {
         ...btnProps.style
     },
     title: '-'
+}
+
+ProductCart.propTypes = {
+    product: PropTypes.object,
+    deleteProduct: PropTypes.func,
+    minusItem: PropTypes.func,
+    plusItem: PropTypes.func
+}
+
+ProductCart.defaultProps = {
+    product: {},
+    deleteProduct: () => { },
+    minusItem: () => { },
+    plusItem: () => { }
 }
 
 export default ProductCart;

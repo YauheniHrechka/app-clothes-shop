@@ -1,8 +1,9 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 import { Link } from 'react-router-dom';
 import { connect } from 'react-redux';
-import { Button, ProductCartSmall } from '../';
 
+import { Button, ProductCartSmall } from '../';
 import { deleteProduct, minusItem, plusItem } from '../../redux/actions/cart';
 
 import './PreviewCart.scss';
@@ -78,5 +79,25 @@ const mapDispatchToProps = dispatch => ({
     minusItem: product => dispatch(minusItem(product)),
     deleteProduct: product => dispatch(deleteProduct(product))
 })
+
+PreviewCart.propTypes = {
+    products: PropTypes.array,
+    deleteProduct: PropTypes.func,
+    minusItem: PropTypes.func,
+    plusItem: PropTypes.func,
+    totalCount: PropTypes.number,
+    totalAmount: PropTypes.number,
+    refPreviewCart: PropTypes.any
+}
+
+PreviewCart.defaultProps = {
+    products: [],
+    deleteProduct: () => { },
+    minusItem: () => { },
+    plusItem: () => { },
+    totalCount: 0,
+    totalAmount: 0,
+    refPreviewCart: React.createRef()
+}
 
 export default connect(mapStateToProps, mapDispatchToProps)(PreviewCart);

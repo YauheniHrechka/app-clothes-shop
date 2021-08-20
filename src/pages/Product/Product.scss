@@ -12,6 +12,9 @@
                 height: 80px;
                 margin-bottom: 40px;
                 cursor: pointer;
+                display: flex;
+                justify-content: center;
+                align-items: center;
 
                 img {
                     max-width: 100%;
@@ -50,6 +53,22 @@
             }
 
             .title {font-weight: 600;}
+            .name {margin-bottom: 40px;}
+            
+            .size,
+            .price span {
+                font-size: 18px;
+                font-weight: 700;
+                margin-bottom: 10px;
+            }
+
+            .description {
+                margin-top: 40px;
+                font-size: 16px;
+                ul {
+                    list-style: none;
+                }                
+            }
         }
     }
 }

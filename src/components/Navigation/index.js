@@ -1,4 +1,5 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 import { Link } from 'react-router-dom';
 import { connect } from 'react-redux';
 
@@ -45,5 +46,17 @@ const mapDispatchToProps = dispatch => ({
     queryProductsByCategory: category => dispatch(queryProductsByCategory(category)),
     setFilterByCategory: category => dispatch(setFilterByCategory(category))
 })
+
+Navigation.propTypes = {
+    activeCategory: PropTypes.string,
+    categories: PropTypes.array,
+    products: PropTypes.any
+}
+
+Navigation.defaultProps = {
+    activeCategory: '',
+    categories: [],
+    products: new Map()
+}
 
 export default connect(mapStateToProps, mapDispatchToProps)(Navigation);

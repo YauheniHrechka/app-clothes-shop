@@ -1,7 +1,8 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
-import { Button } from '../../components';
 
+import { Button } from '../../components';
 import { queryProductById } from '../../redux/actions/categories';
 import { addProduct } from '../../redux/actions/cart';
 
@@ -48,8 +49,9 @@ class Product extends React.Component {
                     <figcaption className="product-info">
                         <p className="title">{brand}</p>
                         <p className="name">{name}</p>
+                        <p className="size">SIZE</p>
                         <div className="attributes">
-                            <span>SIZE:</span>
+                            {/* <span>SIZE:</span> */}
                         </div>
                         <div className="price">
                             <span>PRICE:</span>
@@ -88,5 +90,15 @@ const mapDispatchToProps = dispatch => ({
     queryProductById: productId => dispatch(queryProductById(productId)),
     addProduct: product => dispatch(addProduct(product))
 })
+
+Product.propTypes = {
+    propduct: PropTypes.object,
+    currency: PropTypes.string
+}
+
+Product.defaultProps = {
+    propduct: {},
+    currency: ''
+}
 
 export default connect(mapStateToProps, mapDispatchToProps)(Product);
