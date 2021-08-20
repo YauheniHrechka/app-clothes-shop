@@ -31,7 +31,20 @@ class ProductCartSmall extends React.Component {
                         </div>
                         <p className="price-small">{amount}</p>
                         <div className="attributes">
-                            <span>SIZE:</span>
+                            {product.attributes.length > 0 &&
+                                product.attributes.map(attribute =>
+                                    <div key={attribute.id} className="attribute-items">
+                                        {attribute.items.map(item =>
+                                            <Button
+                                                style={{
+                                                    ...btnAttribute.style,
+                                                    background: attribute.type === 'swatch' ? item.value : btnAttribute.style.background,
+                                                    color: attribute.type === 'swatch' && item.value === '#000000' ? '#ffffff' : btnAttribute.style.color
+                                                }}
+                                                title={attribute.type === 'swatch' ? '' : item.displayValue}
+                                                key={item.id} />
+                                        )}
+                                    </div>)}
                         </div>
                     </div>
                     <div className="count-small">
@@ -71,6 +84,20 @@ const btnMinus = {
         ...btnProps.style
     },
     title: '-'
+}
+
+const btnAttribute = {
+    style: {
+        padding: '5px',
+        margin: '0 8px 10px 0',
+        minWidth: '24px',
+        height: '24px',
+        background: '#ffffff',
+        color: '#292929',
+        fontSize: '14px',
+        border: '1px solid #1d1f22'
+    },
+    title: ''
 }
 
 ProductCartSmall.propTypes = {

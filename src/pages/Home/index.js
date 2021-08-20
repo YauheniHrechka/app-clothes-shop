@@ -15,7 +15,7 @@ class Home extends React.Component {
 
         return (
             <>
-                <h2 className="title">{activeCategory.toUpperCase()}</h2>
+                <h2 className="title">{activeCategory}</h2>
                 <div className="products">
                     {products.length > 0 &&
                         products.map(product =>

@@ -16,7 +16,7 @@ class PreviewCart extends React.Component {
 
         return (
             <div ref={refPreviewCart} className="preview-cart">
-                <div className="title">
+                <div className="preview-title">
                     <span>My Bag,</span><span>{` ${totalCount} items`}</span>
                 </div>
                 {products.map(product =>

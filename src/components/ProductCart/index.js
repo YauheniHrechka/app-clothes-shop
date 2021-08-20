@@ -55,9 +55,22 @@ class ProductCart extends React.Component {
                     <div className="product-info">
                         <p className="title">{product.brand}</p>
                         <p className="name">{product.name}</p>
-                        <p>{amount}</p>
+                        <p className="price">{amount}</p>
                         <div className="attributes">
-                            {/* <span>SIZE:</span> */}
+                            {product.attributes.length > 0 &&
+                                product.attributes.map(attribute =>
+                                    <div key={attribute.id} className="attribute-items">
+                                        {attribute.items.map(item =>
+                                            <Button
+                                                style={{
+                                                    ...btnAttribute.style,
+                                                    background: attribute.type === 'swatch' ? item.value : btnAttribute.style.background,
+                                                    color: attribute.type === 'swatch' && item.value === '#000000' ? '#ffffff' : btnAttribute.style.color
+                                                }}
+                                                title={attribute.type === 'swatch' ? '' : item.displayValue}
+                                                key={item.id} />
+                                        )}
+                                    </div>)}
                         </div>
                     </div>
                     <div className="count">
@@ -103,6 +116,20 @@ const btnMinus = {
         ...btnProps.style
     },
     title: '-'
+}
+
+const btnAttribute = {
+    style: {
+        padding: '5px',
+        margin: '0 10px 12px 0',
+        minWidth: '65px',
+        height: '45px',
+        background: '#ffffff',
+        color: '#292929',
+        fontSize: '18px',
+        border: '1px solid #1d1f22'
+    },
+    title: ''
 }
 
 ProductCart.propTypes = {

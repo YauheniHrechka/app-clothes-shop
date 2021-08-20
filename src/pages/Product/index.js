@@ -26,9 +26,10 @@ class Product extends React.Component {
     render() {
         // console.log('product => ', this.props.product);
         // console.log('render page PRODUCT');
-        const { product: { brand, name, gallery, prices, description }, currency } = this.props;
+        const { product: { attributes = [], brand, name, gallery, prices, description }, currency } = this.props;
         const { activeImage } = this.state;
         const price = prices.find(price => price.currency === currency).amount;
+        console.log('attributes => ', attributes);
 
         return (
             <div className="product-wrapper">
@@ -49,9 +50,24 @@ class Product extends React.Component {
                     <figcaption className="product-info">
                         <p className="title">{brand}</p>
                         <p className="name">{name}</p>
-                        <p className="size">SIZE</p>
                         <div className="attributes">
-                            {/* <span>SIZE:</span> */}
+                            {attributes.length > 0 &&
+                                attributes.map(attribute =>
+                                    <div key={attribute.id} className="attribute-wrapper">
+                                        <p className="attribute-title">{attribute.name}</p>
+                                        <div className="attribute-items">
+                                            {attribute.items.map(item =>
+                                                <Button
+                                                    style={{
+                                                        ...btnAttribute.style,
+                                                        background: attribute.type === 'swatch' ? item.value : btnAttribute.style.background,
+                                                        color: attribute.type === 'swatch' && item.value === '#000000' ? '#ffffff' : btnAttribute.style.color
+                                                    }}
+                                                    title={attribute.type === 'swatch' ? '' : item.displayValue}
+                                                    key={item.id} />
+                                            )}
+                                        </div>
+                                    </div>)}
                         </div>
                         <div className="price">
                             <span>PRICE:</span>
@@ -77,7 +93,22 @@ const btnProps = {
     title: 'ADD TO CART'
 }
 
+const btnAttribute = {
+    style: {
+        padding: '5px',
+        margin: '0 10px 12px 0',
+        minWidth: '65px',
+        height: '45px',
+        background: '#ffffff',
+        color: '#292929',
+        fontSize: '18px',
+        border: '1px solid #1d1f22'
+    },
+    title: ''
+}
+
 const mapStateToProps = (state, props) => {
+    // console.log('state => ', state);
     const { categories: { products }, cart } = state;
     const { id, category } = props.match.params;
     return {

@@ -21,6 +21,14 @@
 
             .attributes {
                 min-height: 24px;
+                margin-bottom: 10px;
+                text-transform: uppercase;
+                 
+                .attribute-items {
+                    display: flex;
+                    justify-content: flex-start;
+                    flex-wrap: wrap;
+                }
             }
         }
 
