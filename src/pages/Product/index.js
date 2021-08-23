@@ -8,33 +8,32 @@ import { addProduct, plusItem } from '../../redux/actions/cart';
 
 import './Product.scss';
 
-class Product extends React.Component {
+class Product extends React.PureComponent {
     state = {
-        activeImage: this.props.product.gallery[0],
+        activeImage: '',
         selectedAttributes: new Map()
     }
 
     static getDerivedStateFromProps(nextProps, prevState) {
-        if (prevState.activeImage === '' && nextProps.product.gallery[0] !== '') {
-            return {
-                activeImage: nextProps.product.gallery[0]
-            };
+        if (prevState.activeImage === '' && nextProps.product.gallery.length) {
+            return { activeImage: nextProps.product.gallery[0] }
         }
-        return null
+        return null;
     }
 
     componentDidMount() {
-        if (!this.props.product.visited) {
-            this.props.queryProductById(this.props.product.id);
+        const { queryProductById, visitedProducts, match: { params } } = this.props;
+        if (!visitedProducts.has(params.id)) {
+            queryProductById(params.id);
         }
     }
 
     onClickImage = image => this.setState({ activeImage: image })
 
     onClickAttribute = ({ attributeId, itemId }) => {
-        this.setState({
-            selectedAttributes: this.state.selectedAttributes.set(attributeId, itemId)
-        });
+        const selectedAttributes = new Map(this.state.selectedAttributes.entries());
+        selectedAttributes.set(attributeId, itemId);
+        this.setState({ selectedAttributes });
     }
 
     onClickAddToCart = () => {
@@ -55,7 +54,7 @@ class Product extends React.Component {
     }
 
     render() {
-        const { product: { attributes = [], brand, name, gallery, prices, description }, currency } = this.props;
+        const { product: { attributes, brand, name, gallery, prices, description }, currency } = this.props;
         const { activeImage, selectedAttributes } = this.state;
         const price = !prices.length ? '0.00' : prices.find(price => price.currency === currency).amount.toFixed(2);
 
@@ -142,19 +141,12 @@ const btnAttribute = {
 }
 
 const mapStateToProps = (state, props) => {
-    const { categories: { products }, cart } = state;
-    const { id, category } = props.match.params;
-
-    if (!products.size) {
-        return {
-            product: { attributes: [], gallery: [''], prices: [] },
-            currency: cart.currency,
-            productsCart: cart.products
-        }
-    }
+    const { categories: { visitedProducts }, cart } = state;
+    const { id } = props.match.params;
 
     return {
-        product: products.get(category).find(product => product.id === id),
+        visitedProducts,
+        product: visitedProducts.get(id),
         currency: cart.currency,
         productsCart: cart.products
     }
@@ -167,13 +159,15 @@ const mapDispatchToProps = dispatch => ({
 })
 
 Product.propTypes = {
-    propduct: PropTypes.object,
+    visitedProducts: PropTypes.any,
+    product: PropTypes.object,
     currency: PropTypes.string,
     productsCart: PropTypes.any
 }
 
 Product.defaultProps = {
-    propduct: {},
+    visitedProducts: new Map(),
+    product: { attributes: [], gallery: [], prices: [] },
     currency: '',
     productsCart: new Map()
 }

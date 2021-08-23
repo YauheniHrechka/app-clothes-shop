@@ -1,6 +1,7 @@
 const initialState = {
     categories: [],
     products: new Map(),
+    visitedProducts: new Map(),
     filters: {
         category: ''
     }
@@ -14,21 +15,7 @@ const setProducts = ({ categories, productsFirstCategory }) => {
     }, new Map());
 }
 
-const setProduct = (products, category, product) => {
-    let [...arrProducts] = products.get(category);
-    let indexProduct = arrProducts.findIndex(item => item.id === product.id);
-    let objProduct = {
-        ...arrProducts[indexProduct],
-        ...product
-    }
-    arrProducts.splice(indexProduct, 1, objProduct);
-
-    return products.set(category, arrProducts);
-}
-
 const categories = (state = initialState, { type, payload }) => {
-    // console.log('type', type);
-    // console.log('payload', payload);
     switch (type) {
 
         case 'SET_ALL_CATEGORIES_AND_PRODUCTS_OF_THE_FIRST_CATEGORY':
@@ -52,10 +39,10 @@ const categories = (state = initialState, { type, payload }) => {
                 }
             }
 
-        case 'SET_PRODUCT':
+        case 'SET_VISITED_PRODUCT':
             return {
                 ...state,
-                products: setProduct(state.products, payload.category, payload),
+                visitedProducts: state.visitedProducts.set(payload.id, payload),
                 filters: {
                     ...state.filters
                 }

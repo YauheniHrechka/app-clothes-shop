@@ -32,7 +32,7 @@ export const queryProductById = productId => async dispatch => {
     client.setEndpoint(config.uri);
 
     const queryResult = await client.post(GET_PRODUCT_BY_ID(productId));
-    dispatch(setProduct(queryResult));
+    dispatch(setVisitedProduct(queryResult));
 }
 
 export const setFilterByCategory = category => ({
@@ -40,8 +40,8 @@ export const setFilterByCategory = category => ({
     payload: category
 })
 
-const setProduct = ({ product }) => ({
-    type: 'SET_PRODUCT',
+const setVisitedProduct = ({ product }) => ({
+    type: 'SET_VISITED_PRODUCT',
     payload: product
 })
 
