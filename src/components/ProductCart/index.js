@@ -1,5 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
+import { Link } from 'react-router-dom';
 
 import { Button } from '../';
 import arrowPrev from '../../assets/img/arrow-left-white.svg';
@@ -7,7 +8,7 @@ import arrowNext from '../../assets/img/arrow-right-white.svg';
 
 import './ProductCart.scss';
 
-class ProductCart extends React.Component {
+class ProductCart extends React.PureComponent {
     state = {
         activeSlide: 0
     }
@@ -45,17 +46,20 @@ class ProductCart extends React.Component {
     }
 
     render() {
-        const { product: [, { product, attributes, amount, count }] } = this.props;
+        const { product: [, { product, attributes, count }], currency } = this.props;
         const { activeSlide } = this.state;
+        const price = product.prices.find(price => price.currency === currency).amount.toFixed(2);
 
         return (
             <div className="product-cart">
                 <hr />
                 <div className="info-wrapper">
                     <div className="product-info">
-                        <p className="product-title">{product.brand}</p>
-                        <p className="product-name">{product.name}</p>
-                        <p className="price">{amount}</p>
+                        <Link to={`/products/${product.category}/${product.id}`}>
+                            <p className="product-title">{product.brand}</p>
+                            <p className="product-name">{product.name}</p>
+                            <p className="price">{`${currency} ${price}`}</p>
+                        </Link>
                         <div className="attributes">
                             {product.attributes.length > 0 &&
                                 product.attributes.map(attribute =>

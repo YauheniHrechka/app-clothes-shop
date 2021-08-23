@@ -14,6 +14,15 @@ class Product extends React.Component {
         selectedAttributes: new Map()
     }
 
+    static getDerivedStateFromProps(nextProps, prevState) {
+        if (prevState.activeImage === '' && nextProps.product.gallery[0] !== '') {
+            return {
+                activeImage: nextProps.product.gallery[0]
+            };
+        }
+        return null
+    }
+
     componentDidMount() {
         if (!this.props.product.visited) {
             this.props.queryProductById(this.props.product.id);
@@ -31,8 +40,10 @@ class Product extends React.Component {
     onClickAddToCart = () => {
         const { product, productsCart, addProduct, plusItem } = this.props;
         const { selectedAttributes } = this.state;
-        if (selectedAttributes.size !== product.attributes.length) {
-            alert('Select attributes'); return
+
+        if (product.attributes === undefined ||
+            selectedAttributes.size !== product.attributes.length) {
+            alert('Select all attribute types'); return
         }
 
         const productId = `${product.id}-${[...selectedAttributes].flat().join('-')}`;
@@ -46,7 +57,7 @@ class Product extends React.Component {
     render() {
         const { product: { attributes = [], brand, name, gallery, prices, description }, currency } = this.props;
         const { activeImage, selectedAttributes } = this.state;
-        const price = prices.find(price => price.currency === currency).amount;
+        const price = !prices.length ? '0.00' : prices.find(price => price.currency === currency).amount.toFixed(2);
 
         return (
             <div className="product-wrapper">
@@ -94,7 +105,7 @@ class Product extends React.Component {
                         </div>
                         <div className="price">
                             <span>PRICE:</span>
-                            <p>{price}</p>
+                            <p>{`${currency} ${price}`}</p>
                             <Button {...btnProps} onClick={this.onClickAddToCart} />
                         </div>
                         <div className="description" dangerouslySetInnerHTML={{ __html: description }}></div>
@@ -133,8 +144,17 @@ const btnAttribute = {
 const mapStateToProps = (state, props) => {
     const { categories: { products }, cart } = state;
     const { id, category } = props.match.params;
+
+    if (!products.size) {
+        return {
+            product: { attributes: [], gallery: [''], prices: [] },
+            currency: cart.currency,
+            productsCart: cart.products
+        }
+    }
+
     return {
-        product: products.get(category).find(product => product.id === id) || {},
+        product: products.get(category).find(product => product.id === id),
         currency: cart.currency,
         productsCart: cart.products
     }

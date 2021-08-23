@@ -6,25 +6,28 @@ import emptyCart from '../../assets/img/empty-cart.svg';
 
 import './ProductCard.scss';
 
-class ProductCard extends React.Component {
+class ProductCard extends React.PureComponent {
 
     render() {
         const { id, category, name, gallery, prices, inCart, inStock, currency } = this.props;
-        const price = prices.find(price => price.currency === currency).amount;
+        const price = prices.find(price => price.currency === currency).amount.toFixed(2);
 
         return (
             <figure className={`product-card ${inCart ? `product-in-cart` : ``}`}>
                 {!inStock && <div className="out-of-stock">OUT OF STOCK</div>}
                 <Link to={`/products/${category}/${id}`}>
-                    <img src={gallery[0]} alt={name} />
-                    <figcaption>
-                        <p>{name}</p>
-                        <p className="product-price">{price}</p>
-                        {inCart && <div className="in-cart">
-                            <img src={emptyCart} alt="in cart" />
-                        </div>}
-                    </figcaption>
+                    <img src={`${gallery.length ? gallery[0] : ''}`} alt={name} />
                 </Link>
+                <figcaption>
+                    <p>{name}</p>
+                    <p className="product-price">{`${currency} ${price}`}</p>
+                    {inCart &&
+                        <Link to="/cart">
+                            <div className="in-cart">
+                                <img src={emptyCart} alt="in cart" />
+                            </div>
+                        </Link>}
+                </figcaption>
             </figure>
         )
     }

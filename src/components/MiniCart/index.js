@@ -3,15 +3,15 @@ import PropTypes from 'prop-types';
 import { Link } from 'react-router-dom';
 import { connect } from 'react-redux';
 
-import { Button, ProductCartSmall } from '../';
+import { Button, ProductCartSmall } from '..';
 import { deleteProduct, minusItem, plusItem } from '../../redux/actions/cart';
 
-import './PreviewCart.scss';
+import './MiniCart.scss';
 
-class PreviewCart extends React.Component {
+class MiniCart extends React.PureComponent {
 
     render() {
-        const { products, deleteProduct, minusItem, plusItem, totalCount, totalAmount, refPreviewCart } = this.props;
+        const { products, currency, deleteProduct, minusItem, plusItem, totalCount, totalAmount, refPreviewCart } = this.props;
 
         return (
             <div ref={refPreviewCart} className="preview-cart">
@@ -20,14 +20,15 @@ class PreviewCart extends React.Component {
                 </div>
                 {products.map(product =>
                     <ProductCartSmall
+                        currency={currency}
                         deleteProduct={deleteProduct}
                         plusItem={plusItem}
                         minusItem={minusItem}
                         product={product}
                         key={product[0]} />
                 )}
-                <div className="total">
-                    <span>Total</span><span>{totalAmount}</span>
+                <div className="preview-total">
+                    <span>Total</span><span>{`${currency} ${totalAmount}`}</span>
                 </div>
                 <div className="buttons">
                     <Link to="/cart">
@@ -67,10 +68,11 @@ const btnCheckOut = {
     title: 'CHECK OUT'
 }
 
-const mapStateToProps = ({ cart: { products, totalCount, totalAmount } }) => ({
+const mapStateToProps = ({ cart: { products, currency, totalCount, totalAmount } }) => ({
     products: [...products],
+    currency,
     totalCount,
-    totalAmount
+    totalAmount: totalAmount.toFixed(2)
 })
 
 const mapDispatchToProps = dispatch => ({
@@ -79,24 +81,26 @@ const mapDispatchToProps = dispatch => ({
     deleteProduct: product => dispatch(deleteProduct(product))
 })
 
-PreviewCart.propTypes = {
+MiniCart.propTypes = {
     products: PropTypes.array,
+    currency: PropTypes.string,
     deleteProduct: PropTypes.func,
     minusItem: PropTypes.func,
     plusItem: PropTypes.func,
     totalCount: PropTypes.number,
-    totalAmount: PropTypes.number,
+    totalAmount: PropTypes.string,
     refPreviewCart: PropTypes.any
 }
 
-PreviewCart.defaultProps = {
+MiniCart.defaultProps = {
     products: [],
+    currency: '',
     deleteProduct: () => { },
     minusItem: () => { },
     plusItem: () => { },
     totalCount: 0,
-    totalAmount: 0,
+    totalAmount: '0.00',
     refPreviewCart: React.createRef()
 }
 
-export default connect(mapStateToProps, mapDispatchToProps)(PreviewCart);
+export default connect(mapStateToProps, mapDispatchToProps)(MiniCart);

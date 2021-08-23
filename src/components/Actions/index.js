@@ -1,6 +1,5 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { Link } from 'react-router-dom';
 import { connect } from 'react-redux';
 
 import cart from '../../assets/img/cart.svg';
@@ -10,7 +9,7 @@ import { changeCurrency } from '../../redux/actions/cart';
 
 import './Actions.scss';
 
-class Actions extends React.Component {
+class Actions extends React.PureComponent {
     state = {
         visibleCurrenciesPopup: false
     }
@@ -24,10 +23,8 @@ class Actions extends React.Component {
         this.props.changeCurrency(currency);
     }
 
-    onChangeCurrency = e => console.log('e => ', e.target.getAttribute('data-currency'))
-
     render() {
-        const { activeCurrency, currencies, onMouseEnterCart, totalCount } = this.props;
+        const { activeCurrency, currencies, onClickCart, refIconCart, totalCount } = this.props;
         const { visibleCurrenciesPopup } = this.state;
 
         return (
@@ -51,11 +48,9 @@ class Actions extends React.Component {
                     }
                 </div>
 
-                <div className="cart" onMouseEnter={onMouseEnterCart}>
-                    <Link to="/cart">
-                        <img src={cart} alt="cart" />
-                        {totalCount > 0 && <span>{totalCount}</span>}
-                    </Link>
+                <div ref={refIconCart} className="cart" onClick={onClickCart}>
+                    <img src={cart} alt="cart" />
+                    {totalCount > 0 && <span>{totalCount}</span>}
                 </div>
             </div>
         )
@@ -75,15 +70,17 @@ const mapDispatchToProps = dispatch => ({
 Actions.propTypes = {
     activeCurrency: PropTypes.string,
     currencies: PropTypes.array,
-    onMouseEnterCart: PropTypes.func,
-    totalCount: PropTypes.number
+    onClickCart: PropTypes.func,
+    totalCount: PropTypes.number,
+    refIconCart: PropTypes.any
 }
 
 Actions.defaultProps = {
     activeCurrency: '',
     currencies: [],
-    onMouseEnterCart: () => { },
-    totalCount: 0
+    onClickCart: () => { },
+    totalCount: 0,
+    refIconCart: React.createRef()
 }
 
 export default connect(mapStateToProps, mapDispatchToProps)(Actions);

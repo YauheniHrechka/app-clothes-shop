@@ -7,7 +7,7 @@ import { queryProductsByCategory, setFilterByCategory } from '../../redux/action
 
 import './Navigation.scss';
 
-class Navigation extends React.Component {
+class Navigation extends React.PureComponent {
 
     onClickCategory = category => {
         if (!this.props.products.get(category).length) {
@@ -19,8 +19,7 @@ class Navigation extends React.Component {
 
     render() {
         const { activeCategory, categories } = this.props;
-        // console.log('render Navigation ', activeCategory);
-        // console.log('render Navigation ');
+
         return (
             <nav className="navigation">
                 <ul>

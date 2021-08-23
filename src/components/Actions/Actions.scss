@@ -17,6 +17,7 @@
             display: block;
             position: absolute;
             box-shadow: 0px 4px 35px rgba(168, 172, 176, 0.19);
+            background: #ffffff;
 
             li {
                 padding: 0 40px 0 20px;
@@ -26,24 +27,22 @@
     }
 
     .cart { 
+        height: 20px;
+        line-height: 20px;
         margin-left: 22px;
+        cursor: pointer;
 
-        a {
-            display: block;
+        span {
+            position: absolute;
+            top: 0;
+            right: -12px;
+            width: 20px;
             height: 20px;
-
-            span {
-                position: absolute;
-                top: 0;
-                right: -12px;
-                width: 20px;
-                height: 20px;
-                border-radius: 50%;
-                background-color: #1d1f22;
-                color: #ffffff;
-                text-align: center;
-                font-size: 14px;
-            }
+            border-radius: 50%;
+            background-color: #1d1f22;
+            color: #ffffff;
+            text-align: center;
+            font-size: 14px;
         }
     }
 }

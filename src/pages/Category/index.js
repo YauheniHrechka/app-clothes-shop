@@ -4,9 +4,9 @@ import { connect } from 'react-redux';
 
 import { ProductCard } from '../../components';
 
-import './Home.scss';
+import './Category.scss';
 
-class Home extends React.Component {
+class Category extends React.Component {
 
     render() {
         const { activeCategory, products, productsCartKeys, currency } = this.props;
@@ -35,18 +35,18 @@ const mapStateToProps = ({ categories: { products, filters }, cart: { currency, 
     productsCartKeys: [...productsCart.keys()].join('')
 })
 
-Home.propTypes = {
+Category.propTypes = {
     activeCategory: PropTypes.string,
     currency: PropTypes.string,
     products: PropTypes.array,
     productsCartKeys: PropTypes.string
 }
 
-Home.defaultProps = {
+Category.defaultProps = {
     activeCategory: '',
     currency: '',
     products: [],
     productsCartKeys: ''
 }
 
-export default connect(mapStateToProps)(Home);
+export default connect(mapStateToProps)(Category);

@@ -10,7 +10,7 @@ import './Cart.scss';
 class Cart extends React.Component {
 
     render() {
-        const { products, deleteProduct, minusItem, plusItem } = this.props;
+        const { products, currency, deleteProduct, minusItem, plusItem, totalAmount } = this.props;
 
         return (
             <div className="cart">
@@ -18,19 +18,25 @@ class Cart extends React.Component {
                 {products.length > 0 &&
                     products.map(product =>
                         <ProductCart
+                            currency={currency}
                             deleteProduct={deleteProduct}
                             plusItem={plusItem}
                             minusItem={minusItem}
                             product={product}
                             key={product[0]} />
                     )}
+                <div className="total">
+                    <span>Total</span><span>{`${currency} ${totalAmount}`}</span>
+                </div>
             </div>
         )
     }
 }
 
-const mapStateToProps = ({ cart: { products } }) => ({
-    products: [...products]
+const mapStateToProps = ({ cart: { products, currency, totalAmount } }) => ({
+    products: [...products],
+    currency,
+    totalAmount: totalAmount.toFixed(2)
 })
 
 const mapDispatchToProps = dispatch => ({
@@ -41,6 +47,8 @@ const mapDispatchToProps = dispatch => ({
 
 Cart.propTypes = {
     products: PropTypes.array,
+    currency: PropTypes.string,
+    totalAmount: PropTypes.string,
     deleteProduct: PropTypes.func,
     minusItem: PropTypes.func,
     plusItem: PropTypes.func
@@ -48,6 +56,8 @@ Cart.propTypes = {
 
 Cart.defaultProps = {
     products: [],
+    currency: '',
+    totalAmount: '0.00',
     deleteProduct: () => { },
     minusItem: () => { },
     plusItem: () => { }

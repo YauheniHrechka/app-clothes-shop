@@ -1,11 +1,12 @@
 import React from 'react';
 import PropTypes from 'prop-types';
+import { Link } from 'react-router-dom';
 
 import { Button } from '../';
 
 import './ProductCartSmall.scss';
 
-class ProductCartSmall extends React.Component {
+class ProductCartSmall extends React.PureComponent {
 
     onClickPlus = () => {
         const { product: [productId, { product }], plusItem } = this.props;
@@ -18,17 +19,20 @@ class ProductCartSmall extends React.Component {
     }
 
     render() {
-        const { product: [, { product, attributes, amount, count }] } = this.props;
+        const { product: [, { product, attributes, count }], currency } = this.props;
+        const price = product.prices.find(price => price.currency === currency).amount.toFixed(2);
 
         return (
             <div className="product-cart-small">
                 <div className="info-wrapper-small">
                     <div className="product-info-small">
-                        <div className="title-small">
-                            <p>{product.brand}</p>
-                            <p>{product.name}</p>
-                        </div>
-                        <p className="price-small">{amount}</p>
+                        <Link to={`/products/${product.category}/${product.id}`}>
+                            <div className="title-small">
+                                <p>{product.brand}</p>
+                                <p>{product.name}</p>
+                            </div>
+                            <p className="price-small">{`${currency} ${price}`}</p>
+                        </Link>
                         <div className="attributes">
                             {product.attributes.length > 0 &&
                                 product.attributes.map(attribute =>

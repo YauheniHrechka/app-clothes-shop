@@ -6,11 +6,10 @@ import logo from '../../assets/img/logo.svg';
 
 import './Header.scss';
 
-class Header extends React.Component {
+class Header extends React.PureComponent {
 
     render() {
-        // const { onMouseEnterCart } = this.props;
-        // console.log('render Header', categories);
+
         return (
             <header className="header" >
                 <Navigation />
