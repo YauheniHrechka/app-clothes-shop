@@ -27,7 +27,7 @@
         flex-direction: row;
 
         .image-show {
-            width: 610px;
+            max-width: 610px;
             height: 510px;
             display: flex;
             justify-content: center;
@@ -41,7 +41,6 @@
 
         .product-info {
             margin-left: 100px;
-            width: 300px;
 
             p {
                 font-size: 30px;

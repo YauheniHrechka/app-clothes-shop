@@ -9,7 +9,7 @@ import './Navigation.scss';
 
 class Navigation extends React.PureComponent {
 
-    onClickCategory = category => {
+    onClickCategory = category => {             // select a category ...
         if (!this.props.products.get(category).length) {
             this.props.queryProductsByCategory(category);
         } else {

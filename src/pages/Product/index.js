@@ -40,8 +40,7 @@ class Product extends React.PureComponent {
         const { product, productsCart, addProduct, plusItem } = this.props;
         const { selectedAttributes } = this.state;
 
-        if (product.attributes === undefined ||
-            selectedAttributes.size !== product.attributes.length) {
+        if (selectedAttributes.size !== product.attributes.length) {
             alert('Select all attribute types'); return
         }
 

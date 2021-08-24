@@ -12,41 +12,41 @@ import './App.scss';
 
 class App extends React.PureComponent {
   state = {
-    visiblePreviewCart: false
+    visibleMiniCart: false
   }
 
   refIconCart = React.createRef();
-  refPreviewCart = React.createRef();
+  refMiniCart = React.createRef();
 
   componentDidMount() {
-    this.props.queryStart();
-    this.props.queryCurrencies();
+    this.props.queryStart();          // get categories ...
+    this.props.queryCurrencies();     // get currencies ...
     document.body.addEventListener('click', this.handleOutsideClick);
   }
 
-  handleOutsideClick = e => {
+  handleOutsideClick = e => {         // click outside of the 'MiniCart' component with the conditions ...
     if (e.target.parentElement === this.refIconCart.current ||
-      !this.state.visiblePreviewCart) return
+      !this.state.visibleMiniCart) return
 
-    if (!e.composedPath().includes(this.refPreviewCart.current) ||
+    if (!e.composedPath().includes(this.refMiniCart.current) ||
       e.target.innerHTML === 'VIEW BAG' ||
       e.target.innerHTML === 'CHECK OUT') {
-      this.setState({ visiblePreviewCart: false })
+      this.setState({ visibleMiniCart: false })
     }
   }
 
   onClickCart = () => {
-    if (this.state.visiblePreviewCart) return
-    this.setState({ visiblePreviewCart: true });
+    if (this.state.visibleMiniCart) return
+    this.setState({ visibleMiniCart: true });
   }
 
   render() {
-    const { onClickCart, refIconCart, refPreviewCart, state: { visiblePreviewCart } } = this;
+    const { onClickCart, refIconCart, refMiniCart, state: { visibleMiniCart } } = this;
 
     return (
       <div className="app-wrapper">
         <Header onClickCart={onClickCart} refIconCart={refIconCart} />
-        {visiblePreviewCart && <div style={{ background: 'rgba(57, 55, 72)', width: '100%', height: '100%', opacity: '0.22', position: 'absolute', zIndex: 98 }}></div>}
+        {visibleMiniCart && <div style={{ background: 'rgba(57, 55, 72)', width: '100%', height: '100%', opacity: '0.22', position: 'absolute', zIndex: 98 }}></div>}
         <main>
           <Switch>
             <Route path="/" exact component={Category} />
@@ -54,7 +54,7 @@ class App extends React.PureComponent {
             <Route path="/cart" component={Cart} />
             <Redirect to="/" />
           </Switch>
-          {visiblePreviewCart && <MiniCart refPreviewCart={refPreviewCart} />}
+          {visibleMiniCart && <MiniCart refMiniCart={refMiniCart} />}
         </main>
       </div>
     );

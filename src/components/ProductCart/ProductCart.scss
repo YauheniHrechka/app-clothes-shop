@@ -1,4 +1,10 @@
 .product-cart {
+    .separator {
+        height: 1px;
+        width: 100%;
+        background: #e5e5e5;
+    }
+
     .info-wrapper {
         margin: 20px 0;
         display: flex;
@@ -20,15 +26,15 @@
                 margin-bottom: 12px;
              }
 
-             .attributes {
-                 text-transform: uppercase;
+            .attributes {
+                text-transform: uppercase;
 
                 .attribute-items {
                     display: flex;
                     justify-content: flex-start;
                     flex-wrap: wrap;
                 }
-             }
+            }
         }
 
         .count {

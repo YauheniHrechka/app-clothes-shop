@@ -23,7 +23,7 @@ class ProductCart extends React.PureComponent {
         (count === 1 ? deleteProduct : minusItem)({ productId, product });
     }
 
-    onClickPrev = () => {
+    onClickPrev = () => {               // get the previous slide ...
         const { product: [, { product }] } = this.props;
         let { activeSlide } = this.state;
 
@@ -34,7 +34,7 @@ class ProductCart extends React.PureComponent {
         })
     }
 
-    onClickNext = () => {
+    onClickNext = () => {               // get the next slide ...
         const { product: [, { product }] } = this.props;
         let { activeSlide } = this.state;
 
@@ -52,7 +52,7 @@ class ProductCart extends React.PureComponent {
 
         return (
             <div className="product-cart">
-                <hr />
+                <div className="separator"></div>
                 <div className="info-wrapper">
                     <div className="product-info">
                         <Link to={`/products/${product.category}/${product.id}`}>

@@ -15,7 +15,7 @@ class Actions extends React.PureComponent {
     }
 
     onClickCurrenciesPopup = () => {
-        this.setState({ visibleCurrenciesPopup: !this.state.visibleCurrenciesPopup });
+        this.setState(state => ({ visibleCurrenciesPopup: !state.visibleCurrenciesPopup }));
     }
 
     onSelectCurrency = currency => {

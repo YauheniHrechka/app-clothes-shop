@@ -11,23 +11,25 @@ import './MiniCart.scss';
 class MiniCart extends React.PureComponent {
 
     render() {
-        const { products, currency, deleteProduct, minusItem, plusItem, totalCount, totalAmount, refPreviewCart } = this.props;
+        const { products, currency, deleteProduct, minusItem, plusItem, totalCount, totalAmount, refMiniCart } = this.props;
 
         return (
-            <div ref={refPreviewCart} className="preview-cart">
-                <div className="preview-title">
+            <div ref={refMiniCart} className="mini-cart">
+                <div className="mini-title">
                     <span>My Bag,</span><span>{` ${totalCount} items`}</span>
                 </div>
-                {products.map(product =>
-                    <ProductCartSmall
-                        currency={currency}
-                        deleteProduct={deleteProduct}
-                        plusItem={plusItem}
-                        minusItem={minusItem}
-                        product={product}
-                        key={product[0]} />
-                )}
-                <div className="preview-total">
+                <div className="mini-products">
+                    {products.map(product =>
+                        <ProductCartSmall
+                            currency={currency}
+                            deleteProduct={deleteProduct}
+                            plusItem={plusItem}
+                            minusItem={minusItem}
+                            product={product}
+                            key={product[0]} />
+                    )}
+                </div>
+                <div className="mini-total">
                     <span>Total</span><span>{`${currency} ${totalAmount}`}</span>
                 </div>
                 <div className="buttons">
