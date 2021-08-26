@@ -12,18 +12,6 @@
         cursor: pointer;
 
         .active-currency { margin-right: 10px; }
-
-        .currencies ul {
-            display: block;
-            position: absolute;
-            box-shadow: 0px 4px 35px rgba(168, 172, 176, 0.19);
-            background: #ffffff;
-
-            li {
-                padding: 0 40px 0 20px;
-                margin: 20px 0;
-            }
-        } 
     }
 
     .cart { 
