@@ -8,3 +8,4 @@ export { default as ProductCart } from './ProductCart';
 export { default as ProductCartSmall } from './ProductCartSmall';
 export { default as MiniCart } from './MiniCart';
 export { default as Button } from './Button';
+export { default as OutOfStock } from './OutOfStock';

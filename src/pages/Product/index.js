@@ -2,7 +2,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 
-import { Button } from '../../components';
+import { Button, OutOfStock } from '../../components';
 import { queryProductById } from '../../redux/actions/categories';
 import { addProduct, plusItem } from '../../redux/actions/cart';
 
@@ -14,17 +14,27 @@ class Product extends React.PureComponent {
         selectedAttributes: new Map()
     }
 
+    refDescription = React.createRef();
+
     static getDerivedStateFromProps(nextProps, prevState) {
         if (prevState.activeImage === '' && nextProps.product.gallery.length) {
             return { activeImage: nextProps.product.gallery[0] }
         }
+
         return null;
     }
 
+    async getProductById(id) {
+        await this.props.queryProductById(id);
+        this.refDescription.current.innerHTML = this.props.product.description;
+    }
+
     componentDidMount() {
-        const { queryProductById, visitedProducts, match: { params } } = this.props;
+        const { visitedProducts, match: { params } } = this.props;
         if (!visitedProducts.has(params.id)) {
-            queryProductById(params.id);
+            this.getProductById(params.id);
+        } else {
+            this.refDescription.current.innerHTML = this.props.product.description;
         }
     }
 
@@ -53,12 +63,13 @@ class Product extends React.PureComponent {
     }
 
     render() {
-        const { product: { attributes, brand, name, gallery, prices, description }, currency } = this.props;
+        const { product: { attributes, brand, name, gallery, prices, inStock }, currency } = this.props;
         const { activeImage, selectedAttributes } = this.state;
         const price = !prices.length ? '0.00' : prices.find(price => price.currency === currency).amount.toFixed(2);
 
         return (
             <div className="product-wrapper">
+                {!inStock && <OutOfStock />}
                 <div className="images-preview">
                     <ul>
                         {gallery.map(image =>
@@ -106,7 +117,7 @@ class Product extends React.PureComponent {
                             <p>{`${currency} ${price}`}</p>
                             <Button {...btnProps} onClick={this.onClickAddToCart} />
                         </div>
-                        <div className="description" dangerouslySetInnerHTML={{ __html: description }}></div>
+                        <div ref={this.refDescription} className="description"></div>
                     </figcaption>
                 </figure>
             </div >

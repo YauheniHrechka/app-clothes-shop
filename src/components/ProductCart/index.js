@@ -86,12 +86,15 @@ class ProductCart extends React.PureComponent {
                     </div>
                     <div className="image-show">
                         <img src={product.gallery[activeSlide]} alt={product.name} />
-                        <button className="btn btn-prev" onClick={this.onClickPrev}>
-                            <img src={arrowPrev} alt="prev" />
-                        </button>
-                        <button className="btn btn-next" onClick={this.onClickNext}>
-                            <img src={arrowNext} alt="next" />
-                        </button>
+                        {product.gallery.length > 1 &&
+                            <>
+                                <button className="btn btn-prev" onClick={this.onClickPrev}>
+                                    <img src={arrowPrev} alt="prev" />
+                                </button>
+                                <button className="btn btn-next" onClick={this.onClickNext}>
+                                    <img src={arrowNext} alt="next" />
+                                </button>
+                            </>}
                     </div>
                 </div>
             </div>

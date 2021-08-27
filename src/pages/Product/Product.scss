@@ -1,4 +1,5 @@
 .product-wrapper {
+    position: relative;
     display: flex;
 
     .images-preview {
@@ -27,7 +28,7 @@
         flex-direction: row;
 
         .image-show {
-            max-width: 610px;
+            min-width: 610px;
             height: 510px;
             display: flex;
             justify-content: center;

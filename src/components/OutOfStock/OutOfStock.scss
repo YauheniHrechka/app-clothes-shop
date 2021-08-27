@@ -1,0 +1,14 @@
+.out-of-stock {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    opacity: 0.5;
+    background: #c4c4c4;
+    color: #8d8f9a;
+    font-size: 24px;
+    font-weight: 400;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    z-index: 5;
+} 
