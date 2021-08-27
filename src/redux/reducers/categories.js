@@ -3,29 +3,28 @@ const initialState = {
     products: new Map(),
     visitedProducts: new Map(),
     filters: {
-        category: ''
+        category: 'all'
     }
 }
 
 const setCategories = categories => categories.map(category => category.name);
 
-const setProducts = ({ categories, productsFirstCategory }) => {
+const setProducts = ({ categories, products }) => {
     return categories.reduce((result, category, index) => {
-        return result.set(category.name, index === 0 ? productsFirstCategory : [])
+        return result.set(category.name, index === 0 ? products : [])
     }, new Map());
 }
 
 const categories = (state = initialState, { type, payload }) => {
     switch (type) {
 
-        case 'SET_ALL_CATEGORIES_AND_PRODUCTS_OF_THE_FIRST_CATEGORY':
+        case 'SET_ALL_CATEGORIES_AND_PRODUCTS':
             return {
                 ...state,
                 categories: setCategories(payload.categories),
                 products: setProducts(payload),
                 filters: {
-                    ...state.filters,
-                    category: payload.categories[0].name || ''
+                    ...state.filters
                 }
             }
 

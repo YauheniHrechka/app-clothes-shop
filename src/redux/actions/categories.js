@@ -10,14 +10,15 @@ export const queryStart = () => async dispatch => {
         // get all categories ...
         const queryResultAllCategories = await client.post(GET_ALL_CATEGORIES);
 
-        // get products of the first category ...
+        // // get products of the first category ...
         const { categories } = queryResultAllCategories;
-        const queryResultProductsByCategory = await client.post(GET_PRODUCTS_BY_CATEGORY(categories[0].name));
+        // const queryResultProductsByCategory = await client.post(GET_PRODUCTS_BY_CATEGORY(categories[0].name));
+        const queryResultProductsByCategory = await client.post(GET_PRODUCTS_BY_CATEGORY(''));
 
         // products of the first category ...
-        const { category: { products: productsFirstCategory } } = queryResultProductsByCategory;
+        const { category: { products } } = queryResultProductsByCategory;
 
-        dispatch(start(categories, productsFirstCategory));
+        dispatch(start([{ name: 'all' }, ...categories], products));
     } catch (e) { }
 }
 
@@ -50,7 +51,7 @@ const setProductsAndFilterByCategory = (category, { category: { products } }) =>
     payload: { category, products }
 })
 
-const start = (categories, productsFirstCategory) => ({
-    type: 'SET_ALL_CATEGORIES_AND_PRODUCTS_OF_THE_FIRST_CATEGORY',
-    payload: { categories, productsFirstCategory }
+const start = (categories, products) => ({
+    type: 'SET_ALL_CATEGORIES_AND_PRODUCTS',
+    payload: { categories, products }
 })

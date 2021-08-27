@@ -9,12 +9,15 @@ import './Navigation.scss';
 
 class Navigation extends React.PureComponent {
 
-    onClickCategory = category => {             // select a category ...
-        if (!this.props.products.get(category).length) {
-            this.props.queryProductsByCategory(category);
-        } else {
-            this.props.setFilterByCategory(category);
-        }
+    onClickCategory = e => {             // select a category ...
+        const category = e.target.parentElement.getAttribute('data-category');
+        if (category === null) return
+
+        const { products, queryProductsByCategory, setFilterByCategory } = this.props;
+
+        (products.get(category).length ?
+            setFilterByCategory :
+            queryProductsByCategory)(category);
     }
 
     render() {
@@ -22,12 +25,10 @@ class Navigation extends React.PureComponent {
 
         return (
             <nav className="navigation">
-                <ul>
+                <ul onClick={this.onClickCategory}>
                     {categories.map(category =>
-                        <li
-                            onClick={() => this.onClickCategory(category)}
-                            key={category}>
-                            <Link to="/" className={activeCategory === category ? `active` : ``}>{category.toUpperCase()}</Link>
+                        <li data-category={category} key={category}>
+                            <Link to="/" className={activeCategory === category ? `active` : ``}>{category}</Link>
                         </li>)}
                 </ul>
             </nav>
@@ -35,11 +36,15 @@ class Navigation extends React.PureComponent {
     }
 }
 
-const mapStateToProps = ({ categories: { categories, products, filters } }) => ({
-    activeCategory: filters.category,
-    categories,
-    products
-})
+const mapStateToProps = (state) => {
+    // console.log('state => ', state);
+    const { categories: { categories, products, filters } } = state;
+    return {
+        activeCategory: filters.category,
+        categories,
+        products
+    }
+}
 
 const mapDispatchToProps = dispatch => ({
     queryProductsByCategory: category => dispatch(queryProductsByCategory(category)),
